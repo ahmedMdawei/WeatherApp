@@ -11,14 +11,13 @@ class WeatherScreen extends StatefulWidget {
 }
 
 class _WeatherScreenState extends State<WeatherScreen> {
-
   // api keys
   final _weatherService = WeatherService(apiKey: dotenv.env['apiKeySecret']!);
   WeatherModel? _weatherModel;
 
-   // get the current city
+  // get the current city
   _fetchWeather() async {
-    String cityName = await _weatherService.getMyCity();
+          String cityName = await _weatherService.getMyCity();
 
     // get weather for city
     try {
@@ -39,6 +38,16 @@ class _WeatherScreenState extends State<WeatherScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold();
+    return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(_weatherModel?.cityName ?? "loading"),
+            Text('${_weatherModel?.temperature.round()} C'),
+          ],
+        ),
+      ),
+    );
   }
 }
